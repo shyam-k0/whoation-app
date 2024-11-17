@@ -43,7 +43,7 @@ export const Navbar = () => {
 					<>
 						<Button variant="ghost" size="sm">
 							<Link href="/documents">
-								Enter Jotion
+								Enter Workspace
 							</Link>
 						</Button>
 						<UserButton/>
