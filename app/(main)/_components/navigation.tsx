@@ -96,6 +96,10 @@ export const Navigation = () => {
 				"group/sidebar h-full bg-secondary overflow-y-auto relative flex w-60 flex-col z-[99999]", 
 				isResetting && "transition-all ease-in-out duration-300",
 				isMobile && "w-0")}>
+				
+				<div className="max-w-[calc(100%-35px)]">
+					<UserItem />
+				</div>
 
 				<div 
 					onClick={collapse}
@@ -108,9 +112,7 @@ export const Navigation = () => {
 				>
 					<ChevronsLeft className="h-6 w-6"/>
 				</div>
-				<div>
-					<UserItem />
-				</div>
+				
 				<div className="mt-4">
 					<p>
 						Documents

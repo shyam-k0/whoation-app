@@ -18,16 +18,16 @@ const UserItem = () => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<div role="button" className="flex items-center text-sm p-3 w-full hover:bg-primary/5">
-					<div className="gap-x-2 flex items-center max-w-[150px]">
+				<div role="button" className="flex items-center text-sm p-3 pt-[0.8rem] w-full hover:bg-primary/5">
+					<div className="gap-x-2 flex items-center max-w-[100%]">
 						<Avatar className="h-5 w-5">
 							<AvatarImage src={user?.imageUrl}/>
 						</Avatar>
 						<span className="text-start font-medium line-clamp-1">
-							{user?.fullName}&apos;s Workspace
+							{user?.fullName}&apos;s Workspace Workspace
 						</span>
 					</div>
-					<ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4"/>
+					<ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4 min-h-4 min-w-4"/>
 				</div>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-80" align="start" alignOffset={11} forceMount>

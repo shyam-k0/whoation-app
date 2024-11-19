@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ConvexClientProvider } from "@/components/providers/convex-provider";
+import {Toaster} from "sonner";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -51,7 +52,9 @@ export default function RootLayout({
 				defaultTheme="system"
 				enableSystem
 				disableTransitionOnChange
-				storageKey="whoation-theme">
+				storageKey="whoation-theme"
+			>				
+				<Toaster />
 				{children}
 			</ThemeProvider>
 		</ConvexClientProvider>
