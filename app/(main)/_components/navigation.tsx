@@ -1,11 +1,16 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon } from "lucide-react";
+import { ChevronsLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import UserItem from "./UserItems";
+import { useMutation } from "convex/react";
+import {api} from "@/convex/_generated/api";
+import { Item } from "./item";
+import { toast } from "sonner"; 
+import { DocumentList } from "./documents-list";
 
 export const Navigation = () => {
 	const pathname = usePathname();
@@ -16,6 +21,8 @@ export const Navigation = () => {
 
 	const [isResetting, setIsResetting] = useState(false);
 	const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+	const create = useMutation(api.documents.create);
 
 	useEffect(() => {
 		if (isMobile){
@@ -89,6 +96,16 @@ export const Navigation = () => {
 		}
 	}
 
+	const handleCreate = () => {
+		const promise = create({title: "Untitled"});
+
+		toast.promise(promise, {
+			loading: "Creating new Note...",
+			success: "Note Created!",
+			error: "Note could not be created. Try again."
+		});
+	}
+
 
 	return (
 		<>
@@ -97,8 +114,24 @@ export const Navigation = () => {
 				isResetting && "transition-all ease-in-out duration-300",
 				isMobile && "w-0")}>
 				
-				<div className="max-w-[calc(100%-35px)]">
+				<div >
 					<UserItem />
+					<Item
+						label="Search"
+						icon={Search}
+						isSearch
+						onClick={() => {}}
+					/>
+					<Item
+						label="Settings"
+						icon={Settings}
+						onClick={() => {}}
+					/>
+					<Item 
+						onClick={handleCreate}
+						label="New Page"
+						icon={PlusCircle}
+					/>
 				</div>
 
 				<div 
@@ -114,14 +147,11 @@ export const Navigation = () => {
 				</div>
 				
 				<div className="mt-4">
-					<p>
-						Documents
-					</p>
+					<DocumentList />
 				</div>
 				<div 
 				onMouseDown={handleMouseDown}
 				onClick={resetWidth}
-
 				className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1
 					bg-primary/10 right-0 top-0"/>
 			</aside>

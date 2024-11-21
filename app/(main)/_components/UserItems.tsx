@@ -6,7 +6,6 @@ import {
 	DropdownMenu,
 	DropdownMenuContent, 
 	DropdownMenuItem, 
-	DropdownMenuLabel, 
 	DropdownMenuSeparator ,
 	DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu";
@@ -16,7 +15,8 @@ const UserItem = () => {
 	const {user} = useUser();
 
 	return (
-		<DropdownMenu>
+		<div className="max-w-[calc(100%-35px)]">
+			<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<div role="button" className="flex items-center text-sm p-3 pt-[0.8rem] w-full hover:bg-primary/5">
 					<div className="gap-x-2 flex items-center max-w-[100%]">
@@ -24,7 +24,7 @@ const UserItem = () => {
 							<AvatarImage src={user?.imageUrl}/>
 						</Avatar>
 						<span className="text-start font-medium line-clamp-1">
-							{user?.fullName}&apos;s Workspace Workspace
+							{user?.fullName}&apos;s Workspace
 						</span>
 					</div>
 					<ChevronsLeftRight className="rotate-90 ml-2 text-muted-foreground h-4 w-4 min-h-4 min-w-4"/>
@@ -56,6 +56,7 @@ const UserItem = () => {
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
+		</div>
 	)
 }
 
