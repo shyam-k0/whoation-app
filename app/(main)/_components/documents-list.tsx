@@ -61,7 +61,7 @@ export const DocumentList = ({
 				className={cn("hidden text-sm font-medium text-muted-foreground/80 last:block"
 				)}
 			>
-				No Pages Inside
+				No Pages Here
 			</p>
 			{documents.map((document) => (
 				<div key={document._id}>
