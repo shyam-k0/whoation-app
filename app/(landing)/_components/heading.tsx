@@ -15,7 +15,7 @@ export const Heading = () => {
 		<div className="max-w-3xl space-y-4">
 			<h1 className="text-3xl sm:text-5xl md:text-6xl font-bold">
 				Make Notes of your World. Make life efficient. This is <span
-				className="underline decoration-orange-300">Whoation</span>
+				className="underline decoration-[#ff9a4f]">Whoation</span>
 			</h1>
 			<h3 className="text-base sm:text-xl md:text-2xl font-medium">
 				Whoation is a productive note taking app, for you.
