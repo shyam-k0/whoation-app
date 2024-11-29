@@ -27,7 +27,6 @@ export const TrashBox = () => {
 
 
 	const onClick = (documentId: string) => {
-		console.log("onCLick in trash-box : " + documentId);
 		router.push(`/documents/${documentId}`);
 	}
 
