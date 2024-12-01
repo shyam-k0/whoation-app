@@ -1,6 +1,7 @@
 import {v} from "convex/values";
 import {mutation, query} from "./_generated/server";
 import {Doc, Id} from "./_generated/dataModel";
+import { exit } from "process";
 
 // export const get = query({
 // 	handler: async (ctx) => {
@@ -254,5 +255,74 @@ export const getSearch = query({
 			.collect()
 		
 		return documents;
+	}
+});
+
+export const getById = query({
+	args: {
+	documentId: v.id("documents"),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+
+		const document = await ctx.db.get(args.documentId);
+
+		if (!document){
+			throw new Error("Document not found.");
+		}
+
+		if (document.isPublished && !document.isArchived){
+			return document;
+		}
+
+		if (!identity){
+			throw new Error("User is not Authenticated.");
+		}
+
+		const userId = identity.subject;
+
+		if (document.userId !== userId){
+			throw new Error("Unauthorised action.");
+		}
+
+		return document;
+	}
+});
+
+export const update  = mutation({
+	args: {
+		id: v.id("documents"),
+		title: v.optional(v.string()),
+		content: v.optional(v.string()),
+		coverImage: v.optional(v.string()),
+		icon: v.optional(v.string()),
+		isPublished: v.optional(v.boolean()),
+	},
+	handler: async (ctx, args) => {
+		const identity = await ctx.auth.getUserIdentity();
+
+		if (!identity){
+			throw new Error("User not Authenticated.");
+		}
+
+		const userId = identity.subject;
+
+		const {id, ...rest} = args;
+
+		const existingDocument = await ctx.db.get(args.id);
+
+		if (!existingDocument){
+			throw new Error("Document not found.");
+		}
+
+		if (existingDocument.userId !== userId){
+			throw new Error("Unauthorised action.");
+		}
+
+		const document = await ctx.db.patch(args.id, {
+			...rest,
+		});
+
+		return document;
 	}
 });
