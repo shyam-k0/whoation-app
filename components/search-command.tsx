@@ -19,7 +19,6 @@ export const SearchCommand = () => {
 
 	const toggle = useSearch((store) => store.toggle);
 	const isOpen = useSearch((store) => store.isOpen);
-	console.log(isOpen);
 	const onClose = useSearch((store) => store.onClose);
 
 	useEffect(() => {
