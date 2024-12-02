@@ -8,6 +8,7 @@ import { ElementRef, useRef, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize";
+import { removeIcon } from "@/convex/documents";
 
 
 interface ToolbarProps {
@@ -25,6 +26,7 @@ export const Toolbar = ({
 	const [isEditing, setIsEditing] = useState(false);
 	const [value, setValue] = useState(initialData.title);
 	const update = useMutation(api.documents.update);
+	const removeIcon = useMutation(api.documents.removeIcon);
 
 	const enableInput = () => {
 		if (preview) return;
@@ -34,7 +36,11 @@ export const Toolbar = ({
 		setTimeout(() => {
 			setValue(initialData.title);
 			inputRef.current?.focus();
-			inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
+			if (inputRef.current?.value === "Untitled"){
+				inputRef.current?.setSelectionRange(0, inputRef.current.value.length);
+			} else {
+				inputRef.current?.setSelectionRange(inputRef.current.value.length, inputRef.current.value.length);
+			}
 		}, 0);
 	}
 
@@ -57,12 +63,25 @@ export const Toolbar = ({
 		}
 	}
 
+	const onIconSelect = (icon: string) => {
+		update({
+			id: initialData._id,
+			icon,
+		});
+	}
+
+	const onRemoveIcon = () => {
+		removeIcon({
+			id: initialData._id,
+		});
+	}
+
 
 	return (
 		<div className="pl-[54px] group relative">
 			{!!initialData.icon && !preview && (
 				<div className="flex items-center gap-x-2 group/icon pt-6">
-					<IconPicker	onChange={() =>{}}>
+					<IconPicker	onChange={onIconSelect}>
 						<p className="text-6xl hover:opacity-75 transition">
 							{initialData.icon}
 						</p>
@@ -72,8 +91,9 @@ export const Toolbar = ({
 						text-muted-foreground text-xs"
 						variant="outline"
 						size="icon"
+						onClick={onRemoveIcon}
 					>
-						<X className="h-4 w-4" onClick={() => {}}/>
+						<X className="h-4 w-4"/>
 					</Button>
 				</div>
 			)}
@@ -85,7 +105,7 @@ export const Toolbar = ({
 
 			<div className="opacity-0 group-hover:opacity-100 flex items-center gap-x-1 py-4">
 				{!initialData.icon && !preview && (
-					<IconPicker asChild onChange={() => {}}>
+					<IconPicker asChild onChange={onIconSelect}>
 						<Button 
 							className="text-muted-foreground text-xs" 
 							variant="outline" 
