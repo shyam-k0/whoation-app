@@ -44,7 +44,7 @@ export const Banner = ({
 	}
 
 	return (
-		<div className="w-full bg-rose-700 text-center text-sm p-2 text-white flex items-center gap-x-2 justify-center">
+		<div className="w-full bg-red-700 dark:bg-red-800/80 text-center text-sm p-2 text-white flex items-center gap-x-2 justify-center">
 			<p>
 				This page is in the Trash.
 			</p>
@@ -52,7 +52,8 @@ export const Banner = ({
 				size="sm" 
 				onClick={onRestore} 
 				variant="outline" 
-				className="border-white bg-transparent hover:bg-primary/10 text-white hover:text-white p-1 px-2 font-normal h-auto"
+				className="border-white bg-transparent hover:bg-primary/10 text-white hover:text-white \
+				p-1 px-2 font-normal h-auto"
 			>
 				<Undo />
 				Restore
