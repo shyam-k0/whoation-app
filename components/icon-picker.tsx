@@ -38,6 +38,6 @@ export const IconPicker = ({
 					onEmojiClick={(data) => onChange(data.emoji)}
 				/>
 			</PopoverContent>
-		</Popover>
+ 		</Popover>
 	)
 }
