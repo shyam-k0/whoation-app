@@ -10,6 +10,7 @@ import { Search, Trash2Icon, Undo } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "sonner";
+import { useEdgeStore } from "@/lib/edgestore";
 
 
 export const TrashBox = () => {
@@ -18,6 +19,7 @@ export const TrashBox = () => {
 	const documents = useQuery(api.documents.getTrash);
 	const restore = useMutation(api.documents.restore);
 	const remove = useMutation(api.documents.remove);
+	const {edgestore} = useEdgeStore();
 
 	const [search, setSearch] = useState("");
 
@@ -45,10 +47,17 @@ export const TrashBox = () => {
 		})
 	}
 
-	const onRemove = (
-		documentId: Id<"documents">
+	const onRemove = async (
+		documentId: Id<"documents">,
+		coverImage?: string,
 	) => {
 		const promise = remove({id: documentId});
+
+		if (coverImage){
+			await edgestore.publicFiles.delete({
+				url: coverImage,
+			});
+		} 
 
 		toast.promise(promise, {
 			loading: "Deleting Note",
@@ -103,7 +112,7 @@ export const TrashBox = () => {
 							>
 								<Undo className="h-4 w-4 text-muted-foreground"/>
 							</div>
-							<ConfirmModal onConfirm={() => onRemove(document._id)}>
+							<ConfirmModal onConfirm={() => onRemove(document._id, document.coverImage)}>
 								<div 
 									role="button"
 									className="rounded-sm p-2 hover:bg-neutral-200 dark:hover:bg-neutral-700"

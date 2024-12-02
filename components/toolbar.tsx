@@ -8,7 +8,6 @@ import { ElementRef, useRef, useState } from "react";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize";
-import { removeIcon } from "@/convex/documents";
 import { useCoverImage } from "@/hooks/use-cover-image";
 
 
@@ -16,7 +15,6 @@ interface ToolbarProps {
 	initialData: Doc<"documents">,
 	preview?: boolean,
 }
-
 
 
 export const Toolbar = ({
