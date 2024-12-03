@@ -9,6 +9,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize";
 import { useCoverImage } from "@/hooks/use-cover-image";
+import { cn } from "@/lib/utils";
 
 
 interface ToolbarProps {
@@ -79,7 +80,13 @@ export const Toolbar = ({
 
 
 	return (
-		<div className="pl-[54px] group relative">
+		<div 
+			className={cn(
+				"group relative",
+				!preview && "pl-[54px]",
+				preview && "pl-[54px]"
+			)}
+		>
 			{!!initialData.icon && !preview && (
 				<div className="flex items-center gap-x-2 group/icon pt-6">
 					<IconPicker	onChange={onIconSelect}>

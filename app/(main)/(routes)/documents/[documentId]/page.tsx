@@ -8,14 +8,15 @@ import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
 
 import dynamic from "next/dynamic";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
 
-interface DocumentIdPageProps {
-	params: {
-		documentId: Id<"documents">
-	}
-}
+// interface DocumentIdPageProps {
+// 	params: {
+// 		documentId: Id<"documents">
+// 	}
+// }
 
 const EditorSkeleton = () => (
 	<div className="space-y-4 pt-4 pl-8">
@@ -25,9 +26,9 @@ const EditorSkeleton = () => (
   </div>
 );
 
-const DocumentIdPage = ({
-	params
-} : DocumentIdPageProps) => {
+const DocumentIdPage = () => {
+	const params = useParams();
+
 	const Editor = useMemo(
 		() => 
 			dynamic(() => import("@/components/editor"), {
@@ -38,14 +39,14 @@ const DocumentIdPage = ({
 	);
 
 	const document = useQuery(api.documents.getById, {
-		documentId: params.documentId
+		documentId: params.documentId as Id<"documents">
 	});
 
 	const update = useMutation(api.documents.update);
 
 	const onEditorChange = (content: string) => {
 		update({
-			id: params.documentId,
+			id: params.documentId as Id<"documents">,
 			content,
 		});
 	}
@@ -80,6 +81,7 @@ const DocumentIdPage = ({
 			<div className="md:max-w-3xl lg:max-w-4xl mx-auto">
 				<Toolbar initialData={document}/>
 				<Editor 
+					editable={true}
 					onChange={onEditorChange}
 					initialContent={document.content}
 				/>
