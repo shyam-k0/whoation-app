@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
@@ -14,13 +14,23 @@ import {
 
 export function ModeToggle() {
   const { theme, setTheme } = useTheme();
+  const [light, setLight] = React.useState(false);
+
+  React.useEffect(() => {
+	if (light){
+		setTheme("light");
+	} else {
+		setTheme("dark");
+	}
+  }, [light]);
 
   const handleToggle = () => {
-	if (theme === "light"){
-		setTheme("dark");
-	} else if (theme === "dark"){
-		setTheme("light");
-	}
+	// if (theme === "light"){
+	// 	setTheme("dark");
+	// } else if (theme === "dark"){
+	// 	setTheme("light");
+	// }
+	setLight(!light);
   }
 
   return (
